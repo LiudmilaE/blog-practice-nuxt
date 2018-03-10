@@ -3,32 +3,16 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <section class="featured-posts">
-      <PostPreview 
-        id="1" 
-        title="Lorem ipsum1" 
-        previewText="Text - lorem ipsum" 
-        thumbnail="https://images.pexels.com/photos/414630/pexels-photo-414630.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb"/>
-      <PostPreview 
-        id="2" 
-        title="Lorem ipsum2" 
-        previewText="Text - lorem ipsum" 
-        thumbnail="https://images.pexels.com/photos/414630/pexels-photo-414630.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb"/>
-      <PostPreview 
-        id="3" 
-        title="Lorem ipsum3" 
-        previewText="Text - lorem ipsum" 
-        thumbnail="https://images.pexels.com/photos/414630/pexels-photo-414630.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb"/>
-    </section>
+    <post-list /> 
   </div>
 </template>
 
 <script>
-import PostPreview from '@/components/Posts/PostPreview'
+import PostList from '@/components/Posts/PostList';
 
 export default {
   components: {
-    PostPreview
+    PostList
   }
 }
 </script>
