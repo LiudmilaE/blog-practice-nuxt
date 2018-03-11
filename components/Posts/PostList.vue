@@ -2,6 +2,7 @@
     <section class="post-list">
       <post-preview 
         id="1" 
+        :is-admin="isAdmin"
         title="Lorem ipsum1" 
         previewText="Text - lorem ipsum" 
         thumbnail="https://images.pexels.com/photos/414630/pexels-photo-414630.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb"/>
@@ -24,6 +25,12 @@ import PostPreview from '@/components/Posts/PostPreview'
 export default {
   components: {
     PostPreview
+  },
+  props: {
+    isAdmin: {
+      type: Boolean,
+      default: false
+    }
   }
 }
 </script>
