@@ -1,22 +1,14 @@
 <template>
-    <section class="post-list">
-      <post-preview 
-        id="1" 
-        :is-admin="isAdmin"
-        title="Lorem ipsum1" 
-        previewText="Text - lorem ipsum" 
-        thumbnail="https://images.pexels.com/photos/414630/pexels-photo-414630.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb"/>
-      <post-preview 
-        id="2" 
-        title="Lorem ipsum2" 
-        previewText="Text - lorem ipsum" 
-        thumbnail="https://images.pexels.com/photos/414630/pexels-photo-414630.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb"/>
-      <post-preview 
-        id="3" 
-        title="Lorem ipsum3" 
-        previewText="Text - lorem ipsum" 
-        thumbnail="https://images.pexels.com/photos/414630/pexels-photo-414630.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb"/>
-    </section>
+  <section class="post-list">
+    <post-preview 
+      v-for="post in posts"
+      :key="post.id"
+      :id="post.id" 
+      :is-admin="isAdmin"
+      :title="post.title" 
+      :previewText="post.previewText" 
+      :thumbnail="post.thumbnail"/>
+  </section>
 </template>
 
 <script>
@@ -30,6 +22,10 @@ export default {
     isAdmin: {
       type: Boolean,
       default: false
+    },
+    posts: {
+      type: Array,
+      required: true
     }
   }
 }
