@@ -10,7 +10,10 @@ export default {
   components: {
     PostList
   },
-  asyncData(context) {
+  fetch(context) {
+    // if (context.store.state.loadedPosts.length > 0) {
+    //   return null;
+    // }
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve({
@@ -31,13 +34,17 @@ export default {
         });
     }, 500);
     })
-    .then(data => data)
+    .then(data => {
+      context.store.comit('setPosts', data.loadedPosts)
+    })
     .catch(e => {
       context.error(e);
     });
   },
-  created() {
-    this.$store.dispatch('setPosts', this.loadedPosts)
+  computed: {
+    loadedPosts() {
+      return this.$store.getters.loadedPosts
+    }
   }
 }
 </script>
