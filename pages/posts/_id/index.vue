@@ -4,9 +4,9 @@
           <h1 class="post-title">{{ loadedPost.title }}</h1>
           <div class="post-details">
               <div class="post=detail">Last updated on {{ loadedPost.updatedDate }}</div>
-              <div class="post=detail">Written by {{ loadedePost.author }}</div>
+              <div class="post=detail">Written by {{ loadedPost.author }}</div>
           </div>
-          <p class="post-content">{{ loadedePost.content }}</p>
+          <p class="post-content">{{ loadedPost.content }}</p>
       </section>
       <section class="post-feedback">
           <p>Let me know what you think about the post</p>
@@ -15,21 +15,29 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  asyncData(context, callback) {
-    setTimeout(()=> {
-      callback(null, {
-        loadedPost: { 
-            id: '1', 
-            title: "A very important post (ID: " + cntext.params.id + ")", 
-            previewText: 'Lorem ipsum...', 
-            author: 'Liuda',
-            updatedDate: new Date(),
-            content: 'Some dummy text',
-            thumbnail: 'https://images.pexels.com/photos/414630/pexels-photo-414630.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb'
-          }
-      })
-    }, 500)
+  asyncData(context) {
+    return axios.get('https://nuxt-blog-project.firebaseio.com/posts/' + context.params.id +'.json')
+      .then(res => {
+        return {
+          loadedPost: res.data
+        }
+      }).catch(e => console.log(e));
+
+    // setTimeout(()=> {
+    //   callback(null, {
+    //     loadedPost: { 
+    //         id: '1', 
+    //         title: "A very important post (ID: " + cntext.params.id + ")", 
+    //         previewText: 'Lorem ipsum...', 
+    //         author: 'Liuda',
+    //         updatedDate: new Date(),
+    //         content: 'Some dummy text',
+    //         thumbnail: 'https://images.pexels.com/photos/414630/pexels-photo-414630.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb'
+    //       }
+    //   })
+    // }, 500)
   }
 }
 </script>
