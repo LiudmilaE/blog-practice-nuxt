@@ -14,14 +14,13 @@ const createStore = () => {
                 state.loadedPosts.push(post);
             },
             editPost(state, editedPost) {
-                const postIndex = state.loadedPosts
-                    .findIndex(post => post.id === editedPost.id);
+                const postIndex = state.loadedPosts.findIndex(post => post.id === editedPost.id);
                 state.loadedPosts[postIndex] = editedPost;
             }
         },
         actions: {
             nuxtServerInit(vuexContext, context) {
-                return axios.get('https://nuxt-blog-project.firebaseio.com/posts.json')
+                return axios.get(process.env.baseUrl + '/posts.json')
                     .then(res => {
                         const postsArray = [];
                         for (const key in res.data) {
@@ -63,18 +62,18 @@ const createStore = () => {
                     ...post, 
                     updatedDate: new Date() 
                     }
-                return axios.post('https://nuxt-blog-project.firebaseio.com/posts.json', createdPost)
+                return axios.post(process.env.baseUrl + '/posts.json', createdPost)
                     .then(res => {
                         vuexContext.commit('addPost', { ...createdPost, id: res.data.name });
                     })
                     .catch(e => console.log(e));
             },
             editPost(vuexContext, editedPost) {
-                axios.put('https://nuxt-blog-project.firebaseio.com/posts/' + editedPost.id +".json", editedPost)
-                .then(res => {
-                    vuexContent.commit('editPost', editedPost);
-                })
-                .catch(e => console.log(e))
+                return axios.put(process.env.baseUrl + '/posts/' + editedPost.id +".json", editedPost)
+                    .then(res => {
+                        vuexContext.commit('editPost', editedPost);
+                    })
+                    .catch(e => console.log(e))
             },
             setPosts(vuexContext, posts) {
                 vuexContext.commit('setPosts', posts)
