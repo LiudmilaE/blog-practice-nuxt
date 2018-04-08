@@ -17,12 +17,10 @@ export default {
   },
 	methods: {
 		onSubmitted(editedPost) {
-			axios.put('https://nuxt-blog-project.firebaseio.com/posts/' + this.$route.params.postId +".json", editedPost)
-			.then(res => {
-				console.log(res.data);
-				this.$router.push('/admin');
-				})
-			.catch(e => console.log(e))
+			this.$store.dispatch('editPost', editedPost)
+				.then(() => {
+					this.$router.push('/admin');
+				});
 		}
 	},
 	asyncData(context) {
@@ -30,21 +28,11 @@ export default {
 			.get('https://nuxt-blog-project.firebaseio.com/posts/' + context.params.postId +'.json')
 			.then(res => {
 				return {
-					loadedPost: res.data
+					loadedPost: { ...res.data, id: context.params.postId }
 				}
-			}).catch(e => console.log(e));
+			})
+			.catch(e => context.error());
   }
-
-//   data() {
-//       return {
-//           loadedPost: {
-//               author: "Liuda",
-//               title: "Cool post",
-//               content: "Best content",
-//               thumbnailLink: 'https://images.pexels.com/photos/414630/pexels-photo-414630.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb'
-//           }
-//       }
-//   }
 }
 </script>
 
