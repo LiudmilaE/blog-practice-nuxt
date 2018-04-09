@@ -43,7 +43,12 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
   ],
+  axios: {
+    baseURL: process.env.BASE_URL || 'https://nuxt-blog-project.firebaseio.com',
+    credentials: false
+  },
 
   /*
   ** Build configuration
@@ -57,7 +62,8 @@ module.exports = {
     }
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'https://nuxt-blog-project.firebaseio.com'
+    baseUrl: process.env.BASE_URL || 'https://nuxt-blog-project.firebaseio.com',
+    fbAPIKey: "AIzaSyBetD3R-mW-noKfUC0WEKl8UisNzYtduWU"
   },
   transition: {
     name: 'fade',

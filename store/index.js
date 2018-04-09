@@ -20,11 +20,12 @@ const createStore = () => {
         },
         actions: {
             nuxtServerInit(vuexContext, context) {
-                return axios.get(process.env.baseUrl + '/posts.json')
-                    .then(res => {
+                return context.app.$axios //to use module @nuxtjs/axios
+                    .$get('/posts.json') //we already set baseURL
+                    .then(data => {
                         const postsArray = [];
-                        for (const key in res.data) {
-                            postsArray.push({ ...res.data[key], id: key })
+                        for (const key in data) {
+                            postsArray.push({ ...data[key], id: key })
                         }
                         vuexContext.commit('setPosts', postsArray);
                     })

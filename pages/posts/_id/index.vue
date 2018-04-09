@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios'; //no need of import because we use @nuxtjs/axios
 
 export default {
   asyncData(context) {
-    return axios.get(process.env.baseUrl + '/posts/' + context.params.id +'.json')
-      .then(res => {
+    return context.app.$axios.$get('/posts/' + context.params.id +'.json')
+      .then(data => {
         return {
-          loadedPost: { ...res.data, id: context.params.id }
+          loadedPost: { ...data, id: context.params.id }
         }
       }).catch(e => console.log(e));
 
