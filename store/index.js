@@ -9,7 +9,7 @@ const createStore = () => {
         },
         mutations: {
             setPosts(state, posts) {
-                state.loadedPosts = posts
+                state.loadedPosts = posts;
             },
             addPost(state, post) {
                 state.loadedPosts.push(post);
@@ -18,7 +18,10 @@ const createStore = () => {
                 const postIndex = state.loadedPosts.findIndex(post => post.id === editedPost.id);
                 state.loadedPosts[postIndex] = editedPost;
             }, setToken(state, token) {
-                state.token = token
+                state.token = token;
+            },
+            clearToken(state) {
+                state.token = null;
             }
         },
         actions: {
@@ -87,13 +90,19 @@ const createStore = () => {
                 if(!authData.isLogin) {
                     authUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + process.env.fbAPIKey;
                 } 
-                this.$axios.post(authUrl, {
+                return axios.post(authUrl, {
                     email: authData.email,
                     password: authData.password,
                     returnSecureToken: true,
                 }).then(result => {
-                    vuexContext.commit('setToken', result.idToken);
+                    vuexContext.commit('setToken', result.data.idToken);
+                    vuexContext.dispatch('setLogoutTimer', result.data.expiresIn * 1000)
                 }).catch(e => console.log(e));
+            },
+            setLogoutTimer(vuexContext, duration) {
+                setTimeout(() => {
+                    vuexContext.commit('clearToken')
+                }, duration)
             }
         },
         getters: {
