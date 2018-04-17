@@ -100,9 +100,10 @@ const createStore = () => {
                     localStorage.setItem('token', result.data.idToken);
                     localStorage.setItem('tokenExpiration', new Date().getTime() + Number.parseInt(result.data.expiresIn) * 1000);
                     Cookie.set('jwt', result.data.idToken);
-                    Cookie.set('expirationDate', new Date().getTime() + +result.data.expiresIn * 1000)
+                    Cookie.set('expirationDate', new Date().getTime() + +result.data.expiresIn * 1000);
                     // vuexContext.dispatch('setLogoutTimer', result.data.expiresIn * 1000)
-                }).catch(e => console.log(e));
+                    return this.$axios.$post('http://localhost:3000/api/track-data', {data: 'Authenticated!'});
+                }).catch(e => console.log(e))
             },
             // setLogoutTimer(vuexContext, duration) {
             //     setTimeout(() => {
