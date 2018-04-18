@@ -26,6 +26,8 @@ const createStore = () => {
             }
         },
         actions: {
+            //when using spa mode this don't work - need to use mounted or created Vue hooks 
+            //or using asyncData or fetch()
             nuxtServerInit(vuexContext, context) {
                 return context.app.$axios //to use module @nuxtjs/axios
                     .$get('/posts.json') //we already set baseURL
